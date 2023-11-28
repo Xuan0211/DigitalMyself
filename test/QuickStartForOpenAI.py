@@ -2,6 +2,7 @@
 #OPENAI_API_KEY = getpass()
 
 # form ./OPENAIKEY.py import OPENAI_API_KEY
+# you should import your own OPENAI_API_KEY
 from OPENAIKEY import OPENAI_API_KEY
 
 from langchain.chains import LLMChain

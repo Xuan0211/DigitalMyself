@@ -6,7 +6,7 @@
 
 `DigitalMyself`将实现对占据个人移动设备的大量数据进行数据图谱构建，站在用户自身角度，充分利用各类数据进行管理。实现对自身数据的解析管理、事务安排助手并使其具备简单的补充性人际交往能力。同时为虚拟数字主播、虚拟偶像、虚拟IP、虚拟助手等前沿市场提供可行方案展示。
 ## 环境要求
- todo
+ python = 3.9
 ## 文档地址
 https://www.wolai.com/mawxuan/sspE2LDT6NDquaGr4HuWbx
 ## ATTENTION

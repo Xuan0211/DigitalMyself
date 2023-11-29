@@ -2,3 +2,4 @@
 .vscode/
 /test/OPENAIKEY.py
 *.pyc
+front_end/reference

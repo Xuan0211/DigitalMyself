@@ -3,3 +3,4 @@
 /test/OPENAIKEY.py
 *.pyc
 front_end/reference
+/back_end/OPENAIKEY.py

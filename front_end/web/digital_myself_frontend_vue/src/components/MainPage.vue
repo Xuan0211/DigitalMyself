@@ -29,7 +29,7 @@
               :style="{ backgroundColor: msg.label === 'bot' ? '#1862991a' : '#f7e27933' }">
               <span class="font_msg">{{ msg.msg }}</span>
             </div>
-            <img v-if="msg.label === 'user'" class="image" :src="bot.avatarUrl" />
+            <img v-if="msg.label === 'user'" class="image" :src="user.avatarUrl" />
           </div>
         </div>
         <div class="flex-col justify-start items-end section_input">
@@ -55,28 +55,28 @@ export default {
         {
           label: "bot",
           msg: "我是DigitalMyself，请问有什么可以帮助您的？"
-        },
-        {
-          label: "user",
-          msg: "上节软工课讲了啥？"
         }
       ],
       optionList: [
         {
-          imgUrl: "https://ide.code.fun/api/image?token=6566083efcfbac001135915e&name=e98755040e3a9a51b113036a48c0c375.png",
+          imgUrl: "../static/upload.png",
           label: "数据导入"
         },
         {
-          imgUrl: "https://ide.code.fun/api/image?token=6566083efcfbac001135915e&name=5647a48d4450dec3c745af4a247fe327.png",
+          imgUrl: "../static/database.png",
           label: "数据管理"
         },
         {
-          imgUrl: "https://ide.code.fun/api/image?token=6566083efcfbac001135915e&name=65d25cf15f3820a2eb559b19239d640c.png",
+          imgUrl: "../static/settings.png",
           label: "设置"
         }
       ],
       bot: {
-        avatarUrl: "https://ide.code.fun/api/image?token=6566083efcfbac001135915e&name=acb51f6a8b7b53b8800cc8d75318c662.png"
+        avatarUrl: "../static/botAvatar.png",
+      },
+      user:
+      {
+        avatarUrl: "../static/userAvatar.jpg",
       },
       input: undefined
     };

@@ -6,9 +6,9 @@ app = Flask(__name__)
 # 解决跨域问题
 CORS(app)
 
-
+# 基础对话
 @app.route('/manager/sendMsg', methods=['GET', 'POST'])
-def hi():
+def sendMsg():
     getData = request.get_json()
     res = sendMsgToOpenAI(getData)
     data = {

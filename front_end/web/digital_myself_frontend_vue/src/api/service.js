@@ -4,7 +4,7 @@ const ConfigBaseURL = 'http://localhost:5000/' //默认路径，这里也可以�
 let loadingInstance = null //这里是loading
 //使用create方法创建axios实例
 export const Service = axios.create({
-  timeout: 20000, // 请求超时时间
+  timeout: 50000, // 请求超时时间
   baseURL: ConfigBaseURL,
   method: 'post',
   headers: {

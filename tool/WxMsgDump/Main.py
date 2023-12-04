@@ -49,15 +49,15 @@ def main():
 
     wx =  WechatManager
     ret = wx.Wechat(wechat).GetUserBasicInfo(keyAddress)
-    wxid = "wxid_cboq7ndna23s12"
+    wxid = "wxid_XXXX"
     wxprofile = ret
 
     # 自动获取文件路径
     win_user = os.path.expandvars('$HOMEPATH')
-    wx_config = open(os.getenv("SystemDrive") + win_user + '\\AppData\\Roaming\\Tencent\\WeChat\\All Users\\config\\3ebffe94.ini')
+    wx_config = open(os.getenv("SystemDrive") + win_user + '\\AppData\\Roaming\\Tencent\\WeChat\\All Users\\config\\XXX.ini')
 
 
-    wx_path = "D:\微信\WeChat Files\wxid_cboq7ndna23s12\MSG"
+    wx_path = "D:\微信\WeChat Files\XXXX"
     dir_path = wx_path + "\\Multi"
 
     print("[+]微信号: "+wxprofile+" 工作路径: "+wx_path)

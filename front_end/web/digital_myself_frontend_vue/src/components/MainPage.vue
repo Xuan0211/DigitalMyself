@@ -11,10 +11,28 @@
             <span class="text_LOGO">DigitalMyself</span>
           </div>
           <div class="self-stretch divider"></div>
-          <div class="flex-row items-center self-stretch option_group" v-for="option, index in optionList" :key="index">
+          <div class="flex-row items-center self-stretch option_group" v-for="option, index in optionList" :key="index"
+            @click="handleClick(option)">
             <img class="option_image" :src="option.imgUrl" />
             <span class="ml-16 option_font">{{ option.label }}</span>
           </div>
+
+          <el-table 
+          :data="fileList" 
+          ref="multipleTable" 
+          :row-key="row => row.id" 
+          @selection-change="handleSelectionChange" 
+          max-height="300">
+
+            <el-table-column type="selection" width="30"  ></el-table-column>
+            <el-table-column property="filename" label="数据列表">
+              <template slot-scope="scope">
+                <div class="cell-content">{{ scope.row.filename }}</div>
+              </template>
+            </el-table-column>
+
+          </el-table>
+
         </div>
         <div class="flex-col items-center group_bottom">
           <span class="text_CN">数字飞升 拯救自己</span>
@@ -40,11 +58,17 @@
         </div>
       </div>
     </div>
+    <el-dialog title="上传" :visible.sync="optionList[0].visible" width="30%">
+      <el-upload class="upload-demo" action="http://localhost:5000/upload" :on-success="handleSuccess"
+        :before-upload="beforeUpload">
+        <el-button size="small" type="primary">点击上传</el-button>
+      </el-upload>
+    </el-dialog>
   </div>
 </template>
   
 <script>
-import { sendMsg } from '@/api/request.js'
+import { sendMsg, getList, changeFileState } from '@/api/request.js'
 export default {
   name: "MainPage",
   components: {},
@@ -60,15 +84,8 @@ export default {
       optionList: [
         {
           imgUrl: "../static/upload.png",
-          label: "数据导入"
-        },
-        {
-          imgUrl: "../static/database.png",
-          label: "数据管理"
-        },
-        {
-          imgUrl: "../static/settings.png",
-          label: "设置"
+          label: "数据导入",
+          visible: false
         }
       ],
       bot: {
@@ -78,10 +95,14 @@ export default {
       {
         avatarUrl: "../static/userAvatar.jpg",
       },
-      input: undefined
+      input: undefined,
+      fileList: [],
+      defaultSelection: [],
+      isFetch: 0,
+      selection:[],
+      unSelection:[]
     };
   },
-
   methods: {
     send() {
       this.msgList.push(
@@ -100,10 +121,81 @@ export default {
         this.input = undefined;
       })
         .catch(err => {
+          this.msgList.push(
+            {
+              label: "bot",
+              msg: err + "\ntry again!"
+            });
           console.log("err")
         });
       console.log("msg end:" + this.input);
+    },
+    fetchList()
+    {
+      setTimeout(() => {
+        getList().then(res => {
+            this.fileList = res.fileList; 
+            this.$nextTick(function () {
+              for (var i = 0 ; i< this.fileList.length ; i++)
+              {             
+                  if( this.fileList[i].state == 1)
+                  {      
+                    this.isFetch ++;
+                    console.log("isFetch ++:"+this.isFetch);
+                    this.selection.push(this.fileList[i])
+                    this.$refs.multipleTable.toggleRowSelection(this.fileList[i], true)
+                  }
+                  else
+                  {
+                    this.unSelection.push(this.fileList[i])
+                  }
+              }
+            });
+          });
+      }, 1000);
+    },
+    handleSuccess(response, file, fileList) {
+      // 文件上传成功的回调函数
+      console.log(response);
+      this.fetchList();
+    },
+    beforeUpload(file) {
+      // 文件上传前的回调函数，可以在此处对文件进行验证
+      console.log(file);
+    },
+    handleClick(option) {
+      switch (option.label) {
+        case "数据导入": option.visible = true;
+      }
+    },
+    handleSelectionChange(selection) {
+      if( this.isFetch )
+      {
+        this.isFetch --;
+        console.log("isFetch --:"+this.isFetch);
+        return;
+      }
+      var unSelectionItem = this.selection.filter(el => !selection.includes(el));
+      var selectionItem = selection.filter(el => !this.selection.includes(el));
+      this.selection = selection;
+      if(unSelectionItem.length)
+      {
+        console.log(unSelectionItem);
+        changeFileState(unSelectionItem[0].id, 0).then(res => {        
+          console.log(res);
+        });
+      }
+      if(selectionItem.length)
+      {
+        console.log(selectionItem);
+        changeFileState(selectionItem[0].id, 1).then(res => {
+          console.log(res);
+        })
+      }
     }
+  },
+  created() {
+    this.fetchList();
   },
 };
 </script>
@@ -277,5 +369,9 @@ export default {
   font-family: Noto Sans SC;
   font-weight: 700;
   line-height: 0.71rem;
+}
+
+.cell-content {
+  font-size: 12px;
 }
 </style>

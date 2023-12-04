@@ -4,3 +4,6 @@
 *.pyc
 front_end/reference
 /back_end/OPENAIKEY.py
+xuan.session.sql
+back_end/store/database/fileInfo.db
+back_end/store/databank/

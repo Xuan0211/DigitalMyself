@@ -85,7 +85,7 @@ def save_to_csv(blocks: list[str], output_file: str) -> None:
         for row in blocks:
             writer.writerow(['"'+ row +'"'])
             
-def single_file_to_csv(file_path: str, id: int) -> None:
+def md_file_to_csv(file_path: str, id: int) -> None:
     """处理单个文件，并将结果保存到csv文件中
 
     Args:

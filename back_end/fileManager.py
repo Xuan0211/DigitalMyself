@@ -54,3 +54,10 @@ class FileManager:
         db_manager.connect()
         db_manager.updateInfo(id, state)
         db_manager.disconnect()
+        
+    def getEnableFileList(self):
+        db_manager = DBManager()
+        db_manager.connect()
+        result = db_manager.selectEnableInfo()
+        db_manager.disconnect()
+        return result

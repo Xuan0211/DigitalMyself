@@ -1,21 +1,29 @@
 ﻿
 
 def localSearch(problem: str):
+    import os
     import sys
     import pandas as pd
     from pathlib import Path
     from similarities import BertSimilarity
+    import globalSetting
+    from fileManager import FileManager
     sys.path.append('..')
-    LOCAL_PATH = str(Path(__file__).parent)
-
+    
     # 1. Read all csv files in the output folder
-    output_folder = LOCAL_PATH + '/store/databank/output'
-    csv_files = Path(output_folder).rglob('*.csv')
+    file_manager = FileManager()
+    enableFileList = file_manager.getEnableFileList()
+    
+    csv_files = []
+    for file in enableFileList:
+        file = list(file)
+        csv_files.append(globalSetting.OUTPUT_FOLDER + str(file[0]) + ".csv")
+    
     dfs = []
     for file in csv_files:
         df = pd.read_csv(file, header=None)
         dfs.append(df)
-
+    
     # 2. Concatenate all DataFrames into a single DataFrame
     concatenated_df = pd.concat(dfs)
 

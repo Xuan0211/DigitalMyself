@@ -70,6 +70,12 @@ class DBManager:
 		cursor.execute("SELECT * FROM fileInfo")
 		rows = cursor.fetchall()
 		return rows
+
+	def selectEnableInfo(self):
+		cursor = self.conn.cursor()
+		cursor.execute("SELECT * FROM fileInfo WHERE state = 1")
+		rows = cursor.fetchall()
+		return rows
   
 if __name__ == '__main__':
     db_manager = DBManager()

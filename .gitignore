@@ -7,3 +7,5 @@ front_end/reference
 xuan.session.sql
 back_end/store/database/fileInfo.db
 back_end/store/databank/
+back_end/nohup.out
+front_end/web/digital_myself_frontend_vue/package-lock.json

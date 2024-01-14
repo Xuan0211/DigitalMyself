@@ -16,6 +16,7 @@
     "axios": "^0.25.0",
     "babel-preset-env": "^1.7.0",
     "element-ui": "^2.15.14",
+    "node": "^21.2.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

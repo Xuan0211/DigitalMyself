@@ -1,10 +1,10 @@
 ﻿import axios from 'axios'
 import { Message, Loading } from 'element-ui'
-const ConfigBaseURL = 'http://localhost:5000/' //默认路径，这里也可以使用env来判断环境
+const ConfigBaseURL = 'http://8.134.138.165:5000/' //默认路径，这里也可以使用env来判断环境
 let loadingInstance = null //这里是loading
 //使用create方法创建axios实例
 export const Service = axios.create({
-  timeout: 50000, // 请求超时时间
+  timeout: 500000, // 请求超时时间
   baseURL: ConfigBaseURL,
   method: 'post',
   headers: {
@@ -22,7 +22,6 @@ Service.interceptors.request.use(config => {
 // 添加响应拦截器
 Service.interceptors.response.use(response => {
   loadingInstance.close()
-  // console.log(response)
   return response.data
 }, error => {
   console.log('TCL: error', error)

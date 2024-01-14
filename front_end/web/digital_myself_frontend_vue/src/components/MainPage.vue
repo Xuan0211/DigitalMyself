@@ -59,7 +59,7 @@
       </div>
     </div>
     <el-dialog title="上传" :visible.sync="optionList[0].visible" width="30%">
-      <el-upload class="upload-demo" action="http://localhost:5000/upload" :on-success="handleSuccess"
+      <el-upload class="upload-demo" action="http://8.134.138.165:5000/upload" :on-success="handleSuccess"
         :before-upload="beforeUpload">
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
@@ -105,13 +105,17 @@ export default {
   },
   methods: {
     send() {
+      // 发送信息
+      // 将文本框中的提问保存到msgList列表中
       this.msgList.push(
         {
           label: "user",
           msg: this.input
         }
       );
+      // 请求后端
       sendMsg(this.input).then(res => {
+        // 将后端回答保存到msgList中
         console.log(res)
         this.msgList.push(
           {
@@ -121,6 +125,7 @@ export default {
         this.input = undefined;
       })
         .catch(err => {
+          // 捕捉数理错误
           this.msgList.push(
             {
               label: "bot",
@@ -132,6 +137,7 @@ export default {
     },
     fetchList()
     {
+      // 获取文件列表
       setTimeout(() => {
         getList().then(res => {
             this.fileList = res.fileList; 
@@ -139,10 +145,12 @@ export default {
               for (var i = 0 ; i< this.fileList.length ; i++)
               {             
                   if( this.fileList[i].state == 1)
-                  {      
+                  {
+                    // 异步锁      
                     this.isFetch ++;
-                    console.log("isFetch ++:"+this.isFetch);
+                    //console.log("isFetch ++:"+this.isFetch);
                     this.selection.push(this.fileList[i])
+                    // 初始化选择列表
                     this.$refs.multipleTable.toggleRowSelection(this.fileList[i], true)
                   }
                   else
@@ -164,6 +172,8 @@ export default {
       console.log(file);
     },
     handleClick(option) {
+      // 处理功能面板的click
+      // [TODO] 更多功能面板（有待扩展）
       switch (option.label) {
         case "数据导入": option.visible = true;
       }
@@ -171,10 +181,14 @@ export default {
     handleSelectionChange(selection) {
       if( this.isFetch )
       {
+        // 异步锁
         this.isFetch --;
-        console.log("isFetch --:"+this.isFetch);
+        //console.log("isFetch --:"+this.isFetch);
         return;
       }
+
+      // 判别究竟是哪个知识库状态改变了
+      // 这坨就是el导致的屎山，无语了
       var unSelectionItem = this.selection.filter(el => !selection.includes(el));
       var selectionItem = selection.filter(el => !this.selection.includes(el));
       this.selection = selection;

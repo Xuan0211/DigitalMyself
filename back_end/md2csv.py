@@ -5,12 +5,10 @@
 # @File    : md2csv.py
 # @Software: Vscode
 
+
 import re
 import csv
-from pathlib import Path
-LOCAL_PATH = str(Path(__file__).parent)
-INPUT_FOLDER = LOCAL_PATH + '\\store\\databank\\input\\'
-OUTPUT_FOLDER = LOCAL_PATH + '\\store\\databank\\output\\'
+import globalSetting
 
 def extract_blocks(markdown_text: str) -> list[(int, str)]:
     """分割Markdown文件，规则为获取两个''#'*n' "''#'*n' 之间的文本块，并记录'#'的数量到level，便于分析块的层级关系
@@ -92,15 +90,15 @@ def md_file_to_csv(file_path: str, id: int) -> None:
         file_path (str): 文件路径
     """
     blocks = process_markdown_file(file_path)
-    output_file = OUTPUT_FOLDER + str(id) + '.csv'
+    output_file = globalSetting.OUTPUT_FOLDER + str(id) + '.csv'
     save_to_csv(blocks, output_file)
     print(f"File {file_path} processed and saved to {output_file}")
 
 if __name__ == '__main__':
     # 获取指定文件夹中的所有md文件
-    md_files = Path(INPUT_FOLDER).rglob('*.md')
+    md_files = Path(globalSetting.INPUT_FOLDER).rglob('*.md')
 
     for file in md_files:
-        output_file = str(file).replace(INPUT_FOLDER, OUTPUT_FOLDER).replace('.md', '.csv')
+        output_file = str(file).replace(globalSetting.INPUT_FOLDER, globalSetting.OUTPUT_FOLDER).replace('.md', '.csv')
         blocks = process_markdown_file(str(file))
         save_to_csv(blocks, output_file)
